@@ -1,20 +1,70 @@
 package Init;
 
 public class Graph {
-    private int h;
-    private int w;
-    private Node[] nod = null;
+
+    protected int h;
+    protected int w;
+    protected Node[] nod = null;
+
+    public int getHeight() {
+        return h;
+    }
+
+    public int getWidth() {
+        return w;
+    }
+
+    public void connectNode(int i, int j, int n) {
+        nod[i].connect(j, nod[n]);
+
+    }
+
+    public void setVal(int i, int j, double a) {
+        nod[i].setVal(j, a);
+
+    }
+
+    public double getVal(int i, int j) {
+        return nod[i].showValEdg(j);
+    }
+
+    public Node getEdg(int i, int j) {
+        return nod[i].EdgPointer(j);
+    }
+
+    public int EdgNum(int i, int j) {
+        return nod[i].EdgNum(j);
+    }
+    public void printGraph(){
+        for(int i=0;i<w*h;i++){
+            for(int j=0;j<4;j++){
+                if(nod[i].isEdg(j))
+                    System.out.print(EdgNum(i,j)+"   "+getVal(i,j)+"   ");
+               
+            }
+            System.out.print("\n");
+        }
+    }
+    public Graph(int h, int w) {
+        this.h = h;
+        this.w = w;
+        this.nod = new Node[h * w];
+        for (int i = 0; i < w * h; i++) {
+            this.nod[i] = new Node(i);
+        }
+    }
 
     public Graph(int h, int w, double a, double b) {
         this.h = h;
         this.w = w;
-        this.nod = new Node[h*w];
-        for(int i = 0; i < w*h; i++)
+        this.nod = new Node[h * w];
+        for (int i = 0; i < w * h; i++) {
             this.nod[i] = new Node(i);
+        }
 
         int column = 1, row = 1;
         /////////////////////////////////
-        for(int i = 0; i < h*w; i++) {
+        for (int i = 0; i < h * w; i++) {
             if (column > this.w) {
                 column = 1;
                 row++;
