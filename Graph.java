@@ -1,5 +1,8 @@
 package Init;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Graph {
 
     protected int h;
@@ -88,6 +91,19 @@ public class Graph {
             column++;
         }
         /////////////////////////////////
+    }
+
+    public void writeToFile(String filename) throws IOException { /////
+        int x = w*h;
+        FileWriter w = new FileWriter(filename);
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (nod[i].isEdg(j))
+                    w.write(EdgNum(i,j) + " :" + getVal(i,j) + " ");
+            }
+            w.write("\n");
+        }
+        w.close();
     }
 
 }
