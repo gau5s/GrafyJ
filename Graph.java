@@ -41,8 +41,8 @@ public class Graph {
     public void printGraph(){
         for(int i=0;i<w*h;i++){
             for(int j=0;j<4;j++){
-                if(nod[i].isEdg(j))
-                    System.out.print(EdgNum(i,j)+"   "+getVal(i,j)+"   ");
+                if(nod[i].isEdg(j)!=false)
+                System.out.print(EdgNum(i,j)+"   "+getVal(i,j)+"   ");
                
             }
             System.out.print("\n");
