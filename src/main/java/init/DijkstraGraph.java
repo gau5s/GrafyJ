@@ -1,4 +1,4 @@
-package Init;
+package init;
 
 public class DijkstraGraph extends Graph {
 

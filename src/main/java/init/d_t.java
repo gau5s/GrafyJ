@@ -1,4 +1,4 @@
-package Init;
+package init;
 
 public class d_t {
     public int node;

@@ -1,5 +1,5 @@
 
-package Init;
+package init;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
