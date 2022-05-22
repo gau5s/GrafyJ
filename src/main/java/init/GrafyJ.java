@@ -15,7 +15,8 @@ public class GrafyJ {
             System.exit(1);
         }
        Graph g=ReadGraph.readGraph(args[0]);
-       g.printGraph();
+       DijkstraGraph gr = new DijkstraGraph(g);
+       gr.printGraph();
        
        
        

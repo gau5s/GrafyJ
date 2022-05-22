@@ -9,6 +9,10 @@ public class Graph {
     protected int w;
     protected Node[] nod = null;
 
+    public Node getNode(int i) {
+        return this.nod[i];
+    }
+
     public int getHeight() {
         return h;
     }
@@ -42,12 +46,16 @@ public class Graph {
         for(int i=0;i<w*h;i++){
             for(int j=0;j<4;j++){
                 if(nod[i].isEdg(j))
-                    System.out.print(EdgNum(i,j)+"   "+getVal(i,j)+"   ");
+                    System.out.print(EdgNum(i,j)+"  "+getVal(i,j)+"  ");
                
             }
             System.out.print("\n");
         }
     }
+
+    public Graph() {
+    }
+
     public Graph(int h, int w) {
         this.h = h;
         this.w = w;

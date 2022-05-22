@@ -12,6 +12,16 @@ public class DijkstraGraph extends Graph {
         }
     }
 
+    public DijkstraGraph(Graph gr) {
+        this.h = gr.h;
+        this.w = gr.w;
+        this.nod = gr.nod;
+        dij = new d_t[w*h];
+        for(int i = 0; i < w*h; i++) {
+            dij[i] = new d_t(i, 999999999, -1);
+        }
+    }
+
     public void dijkstra(int x) { //x - wezel od ktorego szukamy najkr odl
         Queue q = new Queue();
         dij[x].odl = 0;
@@ -28,5 +38,28 @@ public class DijkstraGraph extends Graph {
                 }
             }
         }
+    }
+
+    public d_t [] shortestPath (int toNode) {
+        int x = dijIlePolaczen(toNode);
+        d_t [] ret = new d_t[x];
+
+        ret[--x] = dij[toNode];
+        while(ret[x].parent != -1) {
+            ret[--x] = dij[ret[x+1].parent];
+        }
+
+        return ret;
+    }
+
+    private int dijIlePolaczen(int toNode) {
+        d_t tmp = this.dij[toNode];
+        int count = 1;
+        while(tmp.parent != -1) {
+            tmp = dij[tmp.parent];
+            count++;
+        }
+
+        return count;
     }
 }
