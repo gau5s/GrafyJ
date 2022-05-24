@@ -8,6 +8,8 @@ public class Graph {
     protected int h;
     protected int w;
     protected Node[] nod = null;
+    protected double minValEdg;
+    protected double maxValEdg;
 
     public Node getNode(int i) {
         return this.nod[i];
@@ -42,6 +44,23 @@ public class Graph {
     public int EdgNum(int i, int j) {
         return nod[i].EdgNum(j);
     }
+
+    public double getMinValEdg() {
+        return this.minValEdg;
+    }
+
+    public double getMaxValEdg() {
+        return this.maxValEdg;
+    }
+
+    public void setMinValEdg(double x) {
+        this.minValEdg = x;
+    }
+
+    public void setMaxValEdg(double x) {
+        this.maxValEdg = x;
+    }
+
     public void printGraph(){
         for(int i=0;i<w*h;i++){
             for(int j=0;j<4;j++){
@@ -68,6 +87,8 @@ public class Graph {
     public Graph(int h, int w, double a, double b) {
         this.h = h;
         this.w = w;
+        this.minValEdg = a;
+        this.maxValEdg = b;
         this.nod = new Node[h * w];
         for (int i = 0; i < w * h; i++) {
             this.nod[i] = new Node(i);

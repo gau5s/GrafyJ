@@ -20,6 +20,8 @@ public class bfs extends Graph{
         this.h = gr.h;
         this.w = gr.w;
         this.nod = gr.nod;
+        this.minValEdg = gr.minValEdg;
+        this.maxValEdg = gr.maxValEdg;
         this.visited = new d_t[w*h];
         for(int i = 0; i < w*h; i++) {
             visited[i] = new d_t(i, 999999999, -1);

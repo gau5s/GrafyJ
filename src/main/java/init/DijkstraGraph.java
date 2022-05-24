@@ -16,6 +16,8 @@ public class DijkstraGraph extends Graph {
         this.h = gr.h;
         this.w = gr.w;
         this.nod = gr.nod;
+        this.minValEdg = gr.minValEdg;
+        this.maxValEdg = gr.maxValEdg;
         dij = new d_t[w*h];
         for(int i = 0; i < w*h; i++) {
             dij[i] = new d_t(i, 999999999, -1);
