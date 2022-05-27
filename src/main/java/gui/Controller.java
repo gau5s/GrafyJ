@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -24,9 +25,9 @@ public class Controller {
     @FXML
     private Button zapiszbutton;
     @FXML
-    private Button bfsbutton;
+    private RadioButton bfsbutton;
     @FXML
-    private CheckBox dijcheck;
+    private RadioButton dijcheck;
     @FXML
     private TextField dialog;
     @FXML
@@ -45,22 +46,35 @@ public class Controller {
             int w=Integer.parseInt(wym[1]);
             double min=Double.parseDouble(war[0]);
             double max=Double.parseDouble(war[1]);
-            try {
-                if (h < 1 || w < 1 )
-                    throw new MyException("Wymiary grafu muszą być dodatnie", null, 0);
-                if (min < 0 || max < 0 || min > max)
-                    throw new MyException("Zakres wartości musi być dodatni i min<max", null, 0);
-            }catch(MyException e){
-                dialog.setText(e.getMessage());
-            }
+
+                generujsprawdzdane();
+
             g = new Graph(h,w,min,max);
             dialog.setText("Wygenerowano graf");
             g.printGraph();
 
-        }catch(ArrayIndexOutOfBoundsException | NumberFormatException e){
+        }catch(ArrayIndexOutOfBoundsException | NumberFormatException |MyException e){
             dialog.setText("Podano złe dane wejściowe do generacji grafu");
         }
 
+    }
+    private void generujsprawdzdane() throws MyException{
+        try {
+            String a = wymiarytext.getText();
+            String b = wartoscitext.getText();
+            String[] wym = a.split(":");
+            String[] war = b.split(":");
+            int h=Integer.parseInt(wym[0]);
+            int w=Integer.parseInt(wym[1]);
+            double min=Double.parseDouble(war[0]);
+            double max=Double.parseDouble(war[1]);
+                if (h < 1 || w < 1)
+                    throw new MyException("Wymiary grafu muszą być dodatnie", null, 0);
+                if (min < 0 || max < 0 || min > max)
+                    throw new MyException("Zakres wartości musi być dodatni i min<max", null, 0);
+         }catch(ArrayIndexOutOfBoundsException | NumberFormatException e){
+                dialog.setText("Podano złe dane wejściowe do generacji grafu");
+         }
     }
 
     @FXML
@@ -69,26 +83,12 @@ public class Controller {
             g = ReadGraph.readGraph(pathtext.getText());
             g.printGraph();
             dialog.setText("Wczytano graf");
+            bfsg();
         }catch (IOException e){
             dialog.setText(e.getMessage());
         }
         catch (MyException e){
             dialog.setText(e.getMessage());
-        }
-    }
-
-
-    @FXML
-    public void bfsg() {
-        if(g==null)
-            bfstext.setText("Brak grafu");
-        else {
-            bfs b = new bfs(g);
-            boolean b1 = b.bfsRun();
-            if (b1 == true)
-                bfstext.setText("Spójny");
-            else
-                bfstext.setText("Niespójny");
         }
     }
     @FXML
@@ -107,7 +107,34 @@ public class Controller {
     }
 
     @FXML
+    public void bfsg() {
+        if(g==null)
+            dialog.setText("Brak grafu do BFS");
+        else {
+            bfs b = new bfs(g);
+            boolean b1 = b.bfsRun();
+            if (b1 == true)
+                bfstext.setText("Spójny");
+            else
+                bfstext.setText("Niespójny");
+        }
+    }
+
+
+    @FXML
     public void dij() {
+        if(g==null)
+            dialog.setText("Brak grafu do Dijkstry");
+
+        else {
+            bfs b = new bfs(g);
+            if(b.bfsRun()) {
+                  DijkstraGraph d=new DijkstraGraph(g);
+            }
+            else{
+                dialog.setText("Dijkstra wymaga spójnego grafu");
+            }
+        }
 
     }
 }
