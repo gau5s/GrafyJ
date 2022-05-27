@@ -84,6 +84,12 @@ public class Controller {
             g.printGraph();
             dialog.setText("Wczytano graf");
             bfsg();
+            bfs b = new bfs(g);
+            boolean b1 = b.bfsRun();
+            if (b1 == true)
+                dijcheck.setDisable(false);
+            else
+                dijcheck.setDisable(true);
         }catch (IOException e){
             dialog.setText(e.getMessage());
         }
