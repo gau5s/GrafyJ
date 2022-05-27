@@ -52,7 +52,8 @@ public class Controller {
             g = new Graph(h,w,min,max);
             dialog.setText("Wygenerowano graf");
             g.printGraph();
-
+            dijcheck.setDisable(false);
+            bfstext.setText("Spójny");
         }catch(ArrayIndexOutOfBoundsException | NumberFormatException |MyException e){
             dialog.setText("Podano złe dane wejściowe do generacji grafu");
         }
@@ -88,8 +89,10 @@ public class Controller {
             boolean b1 = b.bfsRun();
             if (b1 == true)
                 dijcheck.setDisable(false);
+
             else
                 dijcheck.setDisable(true);
+
         }catch (IOException e){
             dialog.setText(e.getMessage());
         }

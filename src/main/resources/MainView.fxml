@@ -16,7 +16,7 @@
       <Button fx:id="zapiszbutton" layoutX="632.0" layoutY="14.0" mnemonicParsing="false" onAction="#zapisz" text="Zapisz" />
       <TextField fx:id="dialog" editable="false" layoutX="271.0" layoutY="52.0" prefHeight="25.0" prefWidth="458.0" />
       <TextField fx:id="bfstext" editable="false" layoutX="750.0" layoutY="14.0" prefHeight="25.0" prefWidth="85.0" />
-      <RadioButton fx:id="bfsbutto" layoutX="698.0" layoutY="18.0" mnemonicParsing="false" onAction="#bfsg" selected="true" text="BFS">
+      <RadioButton fx:id="bfsbutton" layoutX="698.0" layoutY="18.0" mnemonicParsing="false" onAction="#bfsg" selected="true" text="BFS">
          <toggleGroup>
             <ToggleGroup fx:id="a" />
          </toggleGroup>
