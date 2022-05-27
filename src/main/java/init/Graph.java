@@ -124,15 +124,18 @@ public class Graph {
 
     public void writeToFile(String filename) throws IOException { /////
         int x = w*h;
-        FileWriter w = new FileWriter(filename);
+        FileWriter wr = new FileWriter(filename);
+        
+        wr.write(h+" "+w);
+        wr.write("\n");
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < 4; j++) {
                 if (nod[i].isEdg(j))
-                    w.write(EdgNum(i,j) + " :" + getVal(i,j) + " ");
+                    wr.write(EdgNum(i,j) + " :" + getVal(i,j) + " ");
             }
-            w.write("\n");
+            wr.write("\n");
         }
-        w.close();
+        wr.close();
     }
 
 }

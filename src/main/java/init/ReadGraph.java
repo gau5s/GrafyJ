@@ -7,79 +7,71 @@ import java.util.Scanner;
 
 public class ReadGraph {
 
-    public static Graph readGraph(String path) throws IOException {
-        int h = 0, w = 0;
-        BufferedReader br = new BufferedReader(new FileReader(path));
-        String line;
-        if ((line = br.readLine()) != null) {
-            String[] f = line.split("\\s+");
-            try {
-                h = Integer.parseInt(f[0]);
-                w = Integer.parseInt(f[1]);
-            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-                System.err.println("Na poczatku pliku powinny sie znajdowac wymiary grafu");
-            }
-        }
-        System.out.printf("Wymiary grafu: %d X %d \n", h, w);
-        Graph g = new Graph(h, w);
-
-        int ilepolaczen, ilewartosci;
-        boolean czyByloJuzPierwszePolaczenie = false;
-        for (int i = 0; i < h * w; i++) {
-            ilepolaczen = 0;
-            ilewartosci = 0;
+    public static Graph readGraph(String path) throws IOException, MyException {
+        try {
+            int h = 0, w = 0;
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            String line;
             if ((line = br.readLine()) != null) {
                 String[] f = line.split("\\s+");
+                try {
+                    h = Integer.parseInt(f[0]);
+                    w = Integer.parseInt(f[1]);
+                } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                    throw new MyException("Na poczatku pliku powinny sie znajdowac wymiary grafu",path,0);
+                }
+            }
 
-                for (int j = 0; j < f.length; j++) {
-                    if (ilepolaczen > 4 || ilewartosci > 4) {
-                        break;
-                    }
-                    if (f[j] != null) {
-                        Scanner s = new Scanner(f[j]);
-                        if (s.hasNext()) {
+            Graph g = new Graph(h, w);
 
-                            try {
-                                if (s.hasNextInt()) {
-                                    int n = s.nextInt();
-                                    if (n >= 0 && n < w * h) {
-                                        g.connectNode(i, ilepolaczen, n);
-                                        ilepolaczen++;
-                                    }
+            int ilepolaczen, ilewartosci;
+            for (int i = 0; i < h * w; i++) {
+                ilepolaczen = 0;
+                ilewartosci = 0;
+                if ((line = br.readLine()) != null) {
+                    String[] f = line.split("\\s+");
 
-                                } else {
-                                    String[] fs = f[j].split(":");
-                                    double x = Double.parseDouble(fs[1]);
-                                    g.setVal(i, ilewartosci, x);
-
-
-                                    if(x > g.getMaxValEdg()){
-                                        g.setMaxValEdg(x);
-                                        if(!czyByloJuzPierwszePolaczenie) {
-                                            g.setMinValEdg(x);
-                                            czyByloJuzPierwszePolaczenie = true;
-                                        }
-                                    }
-                                    else if( x < g.getMinValEdg() ) {
-                                        g.setMinValEdg(x);
-                                    }
-
-                                    ilewartosci++;
-                                }
-                            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-                                System.err.println("Linia " + (i + 2) + " jest błędna");
-                                throw e;
-                            }
+                    for (int j = 0; j < f.length; j++) {
+                        if (ilepolaczen > 4 || ilewartosci > 3) {
+                            break;
                         }
-                        s.close();
+                        if (f[j] != null) {
+                            Scanner s = new Scanner(f[j]);
+                            if (s.hasNext()) {
+
+                                try {
+                                    if (s.hasNextInt()) {
+                                        int n = s.nextInt();
+                                        if (n >= 0 && n < w * h) {
+                                            g.connectNode(i, ilepolaczen, n);
+                                            ilepolaczen++;
+                                        }
+
+                                    } else {
+                                        String[] fs = f[j].split(":");
+                                        Double x = Double.parseDouble(fs[1]);
+                                        if(x<0)
+                                            throw new MyException("W linii " + (i+2) + " waga krawedzi jest ujemna ",path,i+2);
+                                        g.setVal(i, ilewartosci, x);
+                                        ilewartosci++;
+                                    }
+                                } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                                    throw new MyException("Linia " + (i + 2) + " jest błędna",path, i + 2);
+
+                                }
+                            }
+                            s.close();
+                        }
+
                     }
 
                 }
 
             }
-
+            return g;
+        } catch (IOException e) {
+            throw new MyException(e.getMessage(),path,0);
         }
-        return g;
-    }
 
+    }
 }

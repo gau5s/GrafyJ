@@ -1,13 +1,14 @@
 package gui;
 
 import init.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
 public class Drawer {
-    public static void draw(BorderPane Pane, int x0, int x1, int y0, int y1, Graph gr) {
+    public static void draw(AnchorPane Pane, int x0, int x1, int y0, int y1, Graph gr) {
         double r1 = (double)(x1 - x0) / (2 * gr.getWidth() - 1) / 2;
         double r2 = (double)(y1 - y0) / (2 * gr.getHeight() - 1) / 2;
         double r = r1 < r2 ? r1: r2;
@@ -61,7 +62,7 @@ public class Drawer {
         }
     }
 
-    public static void drawDijkstra(BorderPane Pane, DijkstraGraph gr, int fromNode, int toNode) {
+    public static void drawDijkstra(AnchorPane Pane, DijkstraGraph gr, int fromNode, int toNode) {
         gr.dijkstra(fromNode);
         d_t [] d = gr.shortestPath(toNode);
         double x0,x1,y0,y1;
