@@ -3,15 +3,16 @@ package gui;
 import init.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
 
 public class Controller {
+    @FXML
+    AnchorPane pane;
     @FXML
     private TextField wymiarytext;
     @FXML
@@ -38,6 +39,9 @@ public class Controller {
     @FXML
     public void generuj() {
         try {
+            if(g != null)
+                Drawer.clean(pane,g);
+
             String a = wymiarytext.getText();
             String b = wartoscitext.getText();
             String[] wym = a.split(":");
@@ -51,9 +55,9 @@ public class Controller {
 
             g = new Graph(h,w,min,max);
             dialog.setText("Wygenerowano graf");
-            g.printGraph();
-            dijcheck.setDisable(false);
-            bfstext.setText("Spójny");
+            Drawer.draw(pane,50,950,100,720,g);
+            bfsg();
+
         }catch(ArrayIndexOutOfBoundsException | NumberFormatException |MyException e){
             dialog.setText("Podano złe dane wejściowe do generacji grafu");
         }
@@ -81,22 +85,15 @@ public class Controller {
     @FXML
     public void wczytaj() {
         try {
+            if(g != null)
+                Drawer.clean(pane,g);
+
             g = ReadGraph.readGraph(pathtext.getText());
-            g.printGraph();
+            Drawer.draw(pane,50,950,100,720,g);
             dialog.setText("Wczytano graf");
             bfsg();
-            bfs b = new bfs(g);
-            boolean b1 = b.bfsRun();
-            if (b1 == true)
-                dijcheck.setDisable(false);
 
-            else
-                dijcheck.setDisable(true);
-
-        }catch (IOException e){
-            dialog.setText(e.getMessage());
-        }
-        catch (MyException e){
+        } catch (IOException | MyException e){
             dialog.setText(e.getMessage());
         }
     }
@@ -122,10 +119,14 @@ public class Controller {
         else {
             bfs b = new bfs(g);
             boolean b1 = b.bfsRun();
-            if (b1 == true)
+            if (b1) {
                 bfstext.setText("Spójny");
-            else
+                dijcheck.setDisable(false);
+            }
+            else {
                 bfstext.setText("Niespójny");
+                dijcheck.setDisable(true);
+            }
         }
     }
 

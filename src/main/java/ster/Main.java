@@ -28,9 +28,6 @@ public class Main extends Application {
         stage.setTitle("GrafyJ");
         stage.show();
 
-        //DijkstraGraph gr = new DijkstraGraph(10,10,0,10);
-        //Drawer.draw(load, 0, 600, 60, 350, gr);
-        //  Drawer.drawDijkstra(load, gr, 1, 97);
 
     }
 

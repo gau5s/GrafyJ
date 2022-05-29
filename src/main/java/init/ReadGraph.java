@@ -25,6 +25,7 @@ public class ReadGraph {
             Graph g = new Graph(h, w);
 
             int ilepolaczen, ilewartosci;
+            boolean czyByloJuzPierwszePolaczenie = false;
             for (int i = 0; i < h * w; i++) {
                 ilepolaczen = 0;
                 ilewartosci = 0;
@@ -32,7 +33,7 @@ public class ReadGraph {
                     String[] f = line.split("\\s+");
 
                     for (int j = 0; j < f.length; j++) {
-                        if (ilepolaczen > 4 || ilewartosci > 3) {
+                        if (ilepolaczen > 4 || ilewartosci > 4) {
                             break;
                         }
                         if (f[j] != null) {
@@ -49,10 +50,22 @@ public class ReadGraph {
 
                                     } else {
                                         String[] fs = f[j].split(":");
-                                        Double x = Double.parseDouble(fs[1]);
+                                        double x = Double.parseDouble(fs[1]);
                                         if(x<0)
                                             throw new MyException("W linii " + (i+2) + " waga krawedzi jest ujemna ",path,i+2);
                                         g.setVal(i, ilewartosci, x);
+
+                                        if(x > g.getMaxValEdg()){
+                                            g.setMaxValEdg(x);
+                                            if(!czyByloJuzPierwszePolaczenie) {
+                                                g.setMinValEdg(x);
+                                                czyByloJuzPierwszePolaczenie = true;
+                                            }
+                                        }
+                                        else if( x < g.getMinValEdg() ) {
+                                            g.setMinValEdg(x);
+                                        }
+
                                         ilewartosci++;
                                     }
                                 } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {

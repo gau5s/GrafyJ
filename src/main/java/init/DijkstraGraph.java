@@ -1,5 +1,10 @@
 package init;
 
+import gui.CircleG;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+
 public class DijkstraGraph extends Graph {
 
     private d_t [] dij = null;
@@ -18,15 +23,19 @@ public class DijkstraGraph extends Graph {
         this.nod = gr.nod;
         this.minValEdg = gr.minValEdg;
         this.maxValEdg = gr.maxValEdg;
+        this.lines = gr.lines;
         dij = new d_t[w*h];
         for(int i = 0; i < w*h; i++) {
+            if(nod[i].getCircle() != null)
+                nod[i].getCircle().setOnMousePressed(circleOnMousePressedEventHandler);
             dij[i] = new d_t(i, 999999999, -1);
         }
     }
 
     public void dijkstra(int x) { //x - wezel od ktorego szukamy najkr odl
         Queue q = new Queue();
-        dij[x].odl = 0;
+        dijFill(x);
+        nod[x].getCircle().setOnMousePressed(circleOnMousePressedEventHandler);
         q.addToQueue(dij[x]);
         while(!q.isEmpty()) {
             d_t act = q.popFromQueue();
@@ -35,11 +44,13 @@ public class DijkstraGraph extends Graph {
                     if(dij[act.node].odl + getVal(act.node, i) < dij[getEdg(act.node, i).showNode()].odl) {
                         dij[getEdg(act.node, i).showNode()].odl = dij[act.node].odl + getVal(act.node, i);
                         dij[getEdg(act.node, i).showNode()].parent = dij[act.node].node;
+                        nod[getEdg(act.node, i).showNode()].getCircle().setOnMousePressed(circleOnMousePressedEventHandler);
                         q.addToQueue(dij[getEdg(act.node, i).showNode()]);
                     }
                 }
             }
         }
+        dijColor();
     }
 
     public d_t [] shortestPath (int toNode) {
@@ -63,5 +74,39 @@ public class DijkstraGraph extends Graph {
         }
 
         return count;
+    }
+
+    private void dijColor() {
+        double sRw = 300/longestPathVal();
+        for(int i = 0; i < dij.length; i++) {
+            double z = dij[i].odl*sRw;
+            nod[i].getCircle().setFill(Color.hsb(z,1,0.75));
+        }
+    }
+
+    private double longestPathVal() {
+        double ret = 0;
+        for(int i = 0; i < dij.length; i++) {
+            if(dij[i].odl > ret)
+                ret = dij[i].odl;
+        }
+        return ret;
+    }
+
+    EventHandler<MouseEvent> circleOnMousePressedEventHandler =
+            new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    CircleG c = (CircleG)t.getSource();
+                    dijkstra(c.getNodeNmb());
+                }
+            };
+    private void dijFill(int node) {
+        for (int i = 0; i < w*h; i++) {
+            if(i == node)
+                dij[i] = new d_t(i, 0, i);
+            else
+                dij[i] = new d_t(i, 999999999, -1);
+        }
     }
 }
