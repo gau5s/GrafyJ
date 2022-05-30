@@ -32,7 +32,7 @@ public class ReadGraph {
                     String[] f = line.split("\\s+");
 
                     for (int j = 0; j < f.length; j++) {
-                        if (ilepolaczen > 4 || ilewartosci > 3) {
+                        if (ilepolaczen > 4 || ilewartosci > 4) {
                             break;
                         }
                         if (f[j] != null) {
