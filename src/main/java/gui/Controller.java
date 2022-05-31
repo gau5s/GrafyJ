@@ -47,22 +47,22 @@ public class Controller {
             double min=Double.parseDouble(war[0]);
             double max=Double.parseDouble(war[1]);
 
-                generujsprawdzdane(a,b);
+                generujsprawdzdane();
 
             g = new Graph(h,w,min,max);
             dialog.setText("Wygenerowano graf");
             g.printGraph();
             dijcheck.setDisable(false);
-            bfsbutton.setSelected(true);
             bfstext.setText("Spójny");
         }catch(ArrayIndexOutOfBoundsException | NumberFormatException |MyException e){
             dialog.setText("Podano złe dane wejściowe do generacji grafu");
         }
 
     }
-    private void generujsprawdzdane(String a, String b) throws MyException{
+    private void generujsprawdzdane() throws MyException{
         try {
-
+            String a = wymiarytext.getText();
+            String b = wartoscitext.getText();
             String[] wym = a.split(":");
             String[] war = b.split(":");
             int h=Integer.parseInt(wym[0]);
@@ -83,7 +83,6 @@ public class Controller {
         try {
             g = ReadGraph.readGraph(pathtext.getText());
             g.printGraph();
-            bfsbutton.setSelected(true);
             dialog.setText("Wczytano graf");
             bfsg();
             bfs b = new bfs(g);
