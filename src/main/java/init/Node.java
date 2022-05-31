@@ -1,5 +1,6 @@
 package init;
 
+import gui.CircleG;
 import javafx.scene.shape.Circle;
 
 import java.util.Random;
@@ -10,7 +11,7 @@ public class Node {
     private Node[] edg = new Node[4];
     private double[] valEdg = new double[4];
     private Random liczba = new Random();
-    private Circle cir;
+    private CircleG cir;
 
     public void setVal(int j, double a) {
         this.valEdg[j] = a;
@@ -46,11 +47,12 @@ public class Node {
         return this.edg[k].i;
     }
 
-    public Circle getCircle() {
+    public CircleG getCircle() {
         return this.cir;
     }
 
-    public void setCircle(Circle c) {
+    public void setCircle(CircleG c) {
         this.cir = c;
     }
+
 }

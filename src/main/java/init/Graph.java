@@ -1,5 +1,6 @@
 package init;
 
+import javafx.scene.shape.Line;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -10,6 +11,8 @@ public class Graph {
     protected Node[] nod = null;
     protected double minValEdg;
     protected double maxValEdg;
+    protected Line[] lines = null;
+    private int actNmbOfLines = 0;
 
     public Node getNode(int i) {
         return this.nod[i];
@@ -61,6 +64,14 @@ public class Graph {
         this.maxValEdg = x;
     }
 
+    public Line[] getLines() {
+        return this.lines;
+    }
+
+    public void setLine(Line l) {
+        this.lines[actNmbOfLines++] = l;
+    }
+
     public void printGraph(){
         for(int i=0;i<w*h;i++){
             for(int j=0;j<4;j++){
@@ -78,6 +89,8 @@ public class Graph {
     public Graph(int h, int w) {
         this.h = h;
         this.w = w;
+        int nmbOfLines = (2*w-1)*(2*h-1)-1;
+        this.lines = new Line[nmbOfLines];
         this.nod = new Node[h * w];
         for (int i = 0; i < w * h; i++) {
             this.nod[i] = new Node(i);
@@ -89,6 +102,8 @@ public class Graph {
         this.w = w;
         this.minValEdg = a;
         this.maxValEdg = b;
+        int nmbOfLines = (2*w-1)*(2*h-1)-1;
+        this.lines = new Line[nmbOfLines];
         this.nod = new Node[h * w];
         for (int i = 0; i < w * h; i++) {
             this.nod[i] = new Node(i);
