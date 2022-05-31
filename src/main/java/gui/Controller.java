@@ -51,9 +51,10 @@ public class Controller {
             double min=Double.parseDouble(war[0]);
             double max=Double.parseDouble(war[1]);
 
-                generujsprawdzdane();
+                generujsprawdzdane(a,b);
 
             g = new Graph(h,w,min,max);
+            bfsbutton.setSelected(true);
             dialog.setText("Wygenerowano graf");
             Drawer.draw(pane,50,950,100,720,g);
             bfsg();
@@ -63,10 +64,9 @@ public class Controller {
         }
 
     }
-    private void generujsprawdzdane() throws MyException{
+    private void generujsprawdzdane(String a, String b) throws MyException{
         try {
-            String a = wymiarytext.getText();
-            String b = wartoscitext.getText();
+
             String[] wym = a.split(":");
             String[] war = b.split(":");
             int h=Integer.parseInt(wym[0]);
@@ -90,6 +90,7 @@ public class Controller {
 
             g = ReadGraph.readGraph(pathtext.getText());
             Drawer.draw(pane,50,950,100,720,g);
+            bfsbutton.setSelected(true);
             dialog.setText("Wczytano graf");
             bfsg();
 
