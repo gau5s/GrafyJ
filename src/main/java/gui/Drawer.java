@@ -85,23 +85,6 @@ public class Drawer {
         }
     }
 
-    public static void drawDijkstra(AnchorPane Pane, DijkstraGraph gr, int fromNode, int toNode) {
-        gr.dijkstra(fromNode);
-        d_t [] d = gr.shortestPath(toNode);
-        double x0,x1,y0,y1;
-
-        for(int i = 0; i < d.length-1; i++) {
-            x0 = gr.getNode(d[i].node).getCircle().getCenterX();
-            y0 = gr.getNode(d[i].node).getCircle().getCenterY();
-            x1 = gr.getNode(d[i+1].node).getCircle().getCenterX();
-            y1 = gr.getNode(d[i+1].node).getCircle().getCenterY();
-
-            Line l = new Line(x0,y0,x1,y1);
-            l.setStroke(Color.WHITE);
-            l.setStrokeWidth(3);
-            Pane.getChildren().add(l);
-        }
-    }
 
     private static double avgEdg(Graph gr, int nod1, int nod2, int k) {
         double ret = 0;
@@ -127,7 +110,9 @@ public class Drawer {
         for(int i = 0; i < l.length; i++) {
             Pane.getChildren().remove(l[i]);
         }
-
+        if(gr instanceof DijkstraGraph) {
+            ((DijkstraGraph) gr).cleanDijkstraLines();
+        }
     }
 
 }

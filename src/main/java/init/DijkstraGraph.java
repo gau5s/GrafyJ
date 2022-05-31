@@ -2,16 +2,25 @@ package init;
 
 import gui.CircleG;
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+
+import java.util.ArrayList;
 
 public class DijkstraGraph extends Graph {
 
     private d_t [] dij = null;
+    private ArrayList<Line> dijkstraLines = new ArrayList<Line>();
+    private int nodeDijkstra; //=-1;
+    private AnchorPane pane = null; // do rysowania najkrotszej sciezki potrzebne
 
     public DijkstraGraph(int h, int w, double a, double b) {
         super(h, w, a, b);
         dij = new d_t[w*h];
+        nodeDijkstra = -1;
         for(int i = 0; i < w*h; i++) {
             dij[i] = new d_t(i, 999999999, -1);
         }
@@ -21,6 +30,7 @@ public class DijkstraGraph extends Graph {
         this.h = gr.h;
         this.w = gr.w;
         this.nod = gr.nod;
+        this.nodeDijkstra = -1;
         this.minValEdg = gr.minValEdg;
         this.maxValEdg = gr.maxValEdg;
         this.lines = gr.lines;
@@ -33,6 +43,7 @@ public class DijkstraGraph extends Graph {
     }
 
     public void dijkstra(int x) { //x - wezel od ktorego szukamy najkr odl
+        this.nodeDijkstra = x;
         Queue q = new Queue();
         dijFill(x);
         nod[x].getCircle().setOnMousePressed(circleOnMousePressedEventHandler);
@@ -51,6 +62,26 @@ public class DijkstraGraph extends Graph {
             }
         }
         dijColor();
+    }
+
+    private void drawDijkstra(AnchorPane Pane, int toNode) {
+        d_t [] d = shortestPath(toNode);
+        double x0,x1,y0,y1;
+        double lineWidth = lines[0].getStrokeWidth();
+
+
+        for(int i = 0; i < d.length-1; i++) {
+            x0 = getNode(d[i].node).getCircle().getCenterX();
+            y0 = getNode(d[i].node).getCircle().getCenterY();
+            x1 = getNode(d[i+1].node).getCircle().getCenterX();
+            y1 = getNode(d[i+1].node).getCircle().getCenterY();
+
+            Line l = new Line(x0,y0,x1,y1);
+            l.setStroke(Color.WHITE);
+            l.setStrokeWidth(1.75*lineWidth);
+            addDijkstraLine(l);
+            Pane.getChildren().add(l);
+        }
     }
 
     public d_t [] shortestPath (int toNode) {
@@ -97,16 +128,35 @@ public class DijkstraGraph extends Graph {
             new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent t) {
-                    CircleG c = (CircleG)t.getSource();
-                    dijkstra(c.getNodeNmb());
+                    if(t.getButton() == MouseButton.PRIMARY) {
+                        CircleG c = (CircleG) t.getSource();
+                        dijkstra(c.getNodeNmb());
+                    }
+                    else if (t.getButton() == MouseButton.SECONDARY && pane != null && nodeDijkstra != -1) {
+                        CircleG c = (CircleG) t.getSource();
+                        drawDijkstra(pane, c.getNodeNmb());
+                    }
                 }
             };
     private void dijFill(int node) {
         for (int i = 0; i < w*h; i++) {
             if(i == node)
-                dij[i] = new d_t(i, 0, i);
+                dij[i] = new d_t(i, 0, -1);
             else
                 dij[i] = new d_t(i, 999999999, -1);
         }
+    }
+
+    public void addDijkstraLine(Line l) {
+        dijkstraLines.add(l);
+    }
+
+    public void cleanDijkstraLines() {
+        pane.getChildren().removeAll(dijkstraLines);
+        dijkstraLines.clear();
+    }
+
+    public void setPane(AnchorPane p) {
+        this.pane = p;
     }
 }

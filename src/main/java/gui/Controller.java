@@ -117,6 +117,9 @@ public class Controller {
         if (g == null) {
             dialog.setText("Brak grafu do BFS");
         } else {
+            if(g instanceof DijkstraGraph)
+                ((DijkstraGraph) g).cleanDijkstraLines();
+
             bfs b = new bfs(g);
             boolean b1 = b.bfsRun();
             if (b1) {
@@ -136,11 +139,13 @@ public class Controller {
         } else {
             bfs b = new bfs(g);
             if (b.bfsRun()) {
-                DijkstraGraph d = new DijkstraGraph(g);
+                g = new DijkstraGraph(g);
+                ((DijkstraGraph) g).setPane(pane);
             } else {
                 dialog.setText("Dijkstra wymaga spójnego grafu");
             }
         }
 
     }
+
 }
