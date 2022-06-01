@@ -19,5 +19,8 @@
          </toggleGroup>
       </RadioButton>
       <RadioButton fx:id="dijcheck" disable="true" layoutX="856.0" layoutY="18.0" mnemonicParsing="false" onAction="#dij" text="Dijkstra" toggleGroup="$a" />
+      <Label layoutX="471.0" layoutY="690.0" text="Color scale" textFill="WHITE" />
+      <Label layoutX="15.0" layoutY="717.0" text="Min" textFill="WHITE" />
+      <Label layoutX="965.0" layoutY="717.0" text="Max" textFill="WHITE" />
    </children>
 </AnchorPane>

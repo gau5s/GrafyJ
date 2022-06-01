@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
@@ -28,7 +29,7 @@ public class Main extends Application {
         stage.setTitle("GrafyJ");
         stage.show();
 
-
+        Drawer.drawColorScale(load,50,950, 710, 740, 75);
     }
 
 }

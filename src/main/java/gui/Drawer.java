@@ -5,6 +5,7 @@ import javafx.scene.Cursor;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 
 public class Drawer {
     public static void draw(AnchorPane Pane, int x0, int x1, int y0, int y1, Graph gr) {
@@ -100,6 +101,21 @@ public class Drawer {
             ret /= 2;
         }
         return ret;
+    }
+
+    public static void drawColorScale(AnchorPane pane ,double x0, double x1, double y0, double y1, int number) {
+        double x = x0, y = y0;
+        double rectangleW = (x1-x0)/number;
+        double rectangleH = y1-y0;
+        double sRw = (double)300/number;
+        double color;
+        for(int i = 0; i < number; i++) {
+            Rectangle rectangle = new Rectangle(x,y,rectangleW,rectangleH);
+            color = sRw*i;
+            rectangle.setFill(Color.hsb(color,0.90,0.75));
+            pane.getChildren().add(rectangle);
+            x += rectangleW;
+        }
     }
 
     public static void clean(AnchorPane Pane, Graph gr) {

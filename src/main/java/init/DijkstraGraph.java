@@ -129,6 +129,7 @@ public class DijkstraGraph extends Graph {
                 @Override
                 public void handle(MouseEvent t) {
                     if(t.getButton() == MouseButton.PRIMARY) {
+                        cleanDijkstraLines();
                         CircleG c = (CircleG) t.getSource();
                         dijkstra(c.getNodeNmb());
                     }
