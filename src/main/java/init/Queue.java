@@ -7,10 +7,22 @@ public class Queue {
     private int size;
     private int actualSize;
 
+    public int getActualSize() {
+        return actualSize;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
     public Queue(){
         q = new d_t[8];
         size = 0;
         actualSize = 8;
+    }
+
+    public d_t[] getQ() {
+        return q;
     }
 
     public boolean isEmpty() {

@@ -55,6 +55,33 @@ public class bfs extends Graph{
         return true;
     }
 
+    public boolean bfsRuntest() {
+
+        Queue q = new Queue();
+
+        q.addToQueue(visited[0]);
+        d_t i;
+        while (!q.isEmpty()) {
+            i = q.popFromQueue();
+            for (int j = 0; j < 4; j++) {
+                if (nod[i.node].isEdg(j) && visited[nod[i.node].EdgNum(j)].parent == -1) {
+                    int x = nod[i.node].EdgNum(j);
+                    visited[x].node = x;
+                    visited[x].parent = i.node;
+                    visited[x].odl = nod[i.node].showValEdg(j);
+
+                    q.addToQueue(visited[x]);
+                }
+            }
+        }
+        for (int j = 0; j < w*h; j++) {
+            if (visited[j].parent == -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void bfsColor(int node) {
         double sRw = (double)1/(w+h)*360;
 

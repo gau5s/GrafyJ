@@ -46,6 +46,8 @@ public class ReadGraph {
                                         if (n >= 0 && n < w * h) {
                                             g.connectNode(i, ilepolaczen, n);
                                             ilepolaczen++;
+                                        }else{
+                                            throw new MyException("W linii " + (i+2) + " połączenie "+n+" jest bledne",path,i+2);
                                         }
 
                                     } else {

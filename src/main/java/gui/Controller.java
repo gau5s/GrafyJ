@@ -85,10 +85,11 @@ public class Controller {
             if (g != null) {
                 Drawer.clean(pane, g);
             }
-
+            bfsbutton.setSelected(true);
+            dijcheck.setDisable(true);
             g = ReadGraph.readGraph(pathtext.getText());
             Drawer.draw(pane, 50, 950, 100, 720, g);
-            bfsbutton.setSelected(true);
+
             dialog.setText("Wczytano graf");
             bfsg();
 
