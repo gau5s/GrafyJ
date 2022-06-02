@@ -57,7 +57,7 @@ public class Controller {
             g = new Graph(h, w, min, max);
             bfsbutton.setSelected(true);
             dialog.setText("Wygenerowano graf");
-            Drawer.draw(pane, 50, 950, 100, 720, g);
+            Drawer.draw(pane, 70, 930, 100, 680, g);
             bfsg();
 
         } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
@@ -85,10 +85,12 @@ public class Controller {
             if (g != null) {
                 Drawer.clean(pane, g);
             }
-            bfsbutton.setSelected(true);
+
             dijcheck.setDisable(true);
             g = ReadGraph.readGraph(pathtext.getText());
-            Drawer.draw(pane, 50, 950, 100, 720, g);
+
+            Drawer.draw(pane, 70, 930, 100, 680, g);
+            bfsbutton.setSelected(true);
 
             dialog.setText("Wczytano graf");
             bfsg();
