@@ -46,7 +46,8 @@ public class DijkstraGraph extends Graph {
         this.nodeDijkstra = x;
         Queue q = new Queue();
         dijFill(x);
-        nod[x].getCircle().setOnMousePressed(circleOnMousePressedEventHandler);
+        if(nod[x].getCircle() != null)
+            nod[x].getCircle().setOnMousePressed(circleOnMousePressedEventHandler);
         q.addToQueue(dij[x]);
         while(!q.isEmpty()) {
             d_t act = q.popFromQueue();
@@ -55,7 +56,8 @@ public class DijkstraGraph extends Graph {
                     if(dij[act.node].odl + getVal(act.node, i) < dij[getEdg(act.node, i).showNode()].odl) {
                         dij[getEdg(act.node, i).showNode()].odl = dij[act.node].odl + getVal(act.node, i);
                         dij[getEdg(act.node, i).showNode()].parent = dij[act.node].node;
-                        nod[getEdg(act.node, i).showNode()].getCircle().setOnMousePressed(circleOnMousePressedEventHandler);
+                        if(nod[x].getCircle() != null)
+                            nod[getEdg(act.node, i).showNode()].getCircle().setOnMousePressed(circleOnMousePressedEventHandler);
                         q.addToQueue(dij[getEdg(act.node, i).showNode()]);
                     }
                 }
@@ -111,7 +113,8 @@ public class DijkstraGraph extends Graph {
         double sRw = 300/longestPathVal();
         for(int i = 0; i < dij.length; i++) {
             double z = dij[i].odl*sRw;
-            nod[i].getCircle().setFill(Color.hsb(z,1,0.75));
+            if(nod[i].getCircle() != null)
+                nod[i].getCircle().setFill(Color.hsb(z,1,0.75));
         }
     }
 
